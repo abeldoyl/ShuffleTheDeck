@@ -25,7 +25,7 @@ namespace ShuffleTheDeck
                     Console.WriteLine("Press \"enter\" to Draw a new card\n"
                     + "Press \"Q\" at any time to quit\n"
                     + "Press \"C\" to clear the board at any time");
-                    DrawBall();
+                    DrawCard();
                     cardcount++;
                 }
                 else
@@ -39,7 +39,7 @@ namespace ShuffleTheDeck
                 userInput = Console.ReadLine(); //Fixed double drawn cards issue
                 if (userInput == "c" || userInput == "C")
                 {
-                    ClearDrawBalls();
+                    ClearDrawCards();
                     cardcount = 0;
                 }
 
@@ -53,51 +53,96 @@ namespace ShuffleTheDeck
 
         static void Display()
         {
-            int padding = 5;
-            int prettyNumber = 0;
+            int padding = 7;
+            string prettyRank = "";
             string placeHolder = "";
             string columnSeperator = " |";
             string currentRow = "";
-            //print heading row
-            string[] heading = { "Heart", "Spade", "Diamond", "Club"};
-            foreach (string thing in heading)
+
+            string[] heading = { "Heart", "Spade", "Diamond", "Club" };
+
+            // Print row header with proper colors
+            for (int i = 0; i < heading.Length; i++)
             {
-                Console.Write(thing.PadLeft(padding) + columnSeperator);
+                SetSuitColor(i);
+                Console.Write(heading[i].PadLeft(padding) + columnSeperator);
+                Console.ResetColor();
             }
             Console.WriteLine();
 
-            // print the rest of the rows
+            // Display cards drawn
             for (int number = 1; number <= 13; number++)
             {
-                //assemble the row
-                for (int letter = 0; letter < 4; letter++)
+                for (int suits = 0; suits < 4; suits++)
                 {
-                    if (drawnCards[letter, number - 1])
+                    SetSuitColor(suits);
+
+                    if (drawnCards[suits, number - 1])
                     {
-                        prettyNumber = number + letter; //offset the number by the letter column
-                        currentRow += prettyNumber.ToString().PadLeft(padding) + columnSeperator;
+                        switch (number)
+                        {
+                            case 1:
+                                prettyRank = "A";
+                                break;
+                            case 11:
+                                prettyRank = "J";
+                                break;
+                            case 12:
+                                prettyRank = "Q";
+                                break;
+                            case 13:
+                                prettyRank = "K";
+                                break;
+                            default:
+                                prettyRank = number.ToString();
+                                break;
+                        }
+
+                        Console.Write(prettyRank.PadLeft(padding) + columnSeperator);
                     }
                     else
                     {
-                        currentRow += placeHolder.PadLeft(padding) + columnSeperator;
+                        Console.Write(placeHolder.PadLeft(padding) + columnSeperator);
                     }
+
+                    Console.ResetColor();
                 }
-                Console.WriteLine(currentRow);
-                currentRow = ""; //reset 
+
+                Console.WriteLine();
             }
         }
 
-        static void DrawBall()
+        // Method to assign suit colors
+        static void SetSuitColor(int suitIndex)
         {
-            int letter = 0, number = 0;
+            switch (suitIndex)
+            {
+                case 0: // Heart
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    break;
+                case 1: // Spade
+                    Console.ForegroundColor = ConsoleColor.DarkBlue;
+                    break;
+                case 2: // Diamond
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    break;
+                case 3: // Club
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    break;
+            }
+        }
+
+        static void DrawCard()
+        {
+            int suit = 0, number = 0;
             do
             {
-                letter = RandomNumberZeroTo(3);
+                suit = RandomNumberZeroTo(3);
                 number = RandomNumberZeroTo(12);
 
-            } while (drawnCards[letter, number]);
+            } while (drawnCards[suit, number]);
 
-            drawnCards[letter, number] = true;
+            drawnCards[suit, number] = true;
 
         }
         /// <summary>
@@ -113,13 +158,13 @@ namespace ShuffleTheDeck
 
         }
 
-        static void ClearDrawBalls()
+        static void ClearDrawCards()
         {
-            for (int letter = 0; letter < 4; letter++)
+            for (int suit = 0; suit < 4; suit++)
             {
                 for (int number = 0; number < 13; number++)
                 {
-                    drawnCards[letter, number] = false;
+                    drawnCards[suit, number] = false;
                 }
             }
 
