@@ -10,7 +10,7 @@ namespace ShuffleTheDeck
 {
     internal class Program
     {
-        static bool[,] drawnCards = new bool[5, 15];
+        static bool[,] drawnCards = new bool[4, 13];
 
         static void Main(string[] args)
         {
@@ -20,9 +20,9 @@ namespace ShuffleTheDeck
             {
                 Console.Clear();
 
-                if (cardcount < 75)
+                if (cardcount < 52)
                 {
-                    Console.WriteLine("Press \"enter\" to Draw a new ball\n"
+                    Console.WriteLine("Press \"enter\" to Draw a new card\n"
                     + "Press \"Q\" at any time to quit\n"
                     + "Press \"C\" to clear the board at any time");
                     DrawBall();
@@ -30,13 +30,13 @@ namespace ShuffleTheDeck
                 }
                 else
                 {
-                    Console.WriteLine("All balls have been drawn");
+                    Console.WriteLine("All cards have been drawn");
                     Console.WriteLine("Press \"Q\" to quit");
                     Console.WriteLine("Press \"C\" to clear the board to start a new game");
                 }
                 Console.WriteLine($"Ball Count: {cardcount}");
                 Display();
-                userInput = Console.ReadLine(); //Fixed double drawn balls issue
+                userInput = Console.ReadLine(); //Fixed double drawn cards issue
                 if (userInput == "c" || userInput == "C")
                 {
                     ClearDrawBalls();
@@ -59,7 +59,7 @@ namespace ShuffleTheDeck
             string columnSeperator = " |";
             string currentRow = "";
             //print heading row
-            string[] heading = { "B", "I", "N", "G", "O" };
+            string[] heading = { "Heart", "Spade", "Diamond", "Club"};
             foreach (string thing in heading)
             {
                 Console.Write(thing.PadLeft(padding) + columnSeperator);
@@ -67,14 +67,14 @@ namespace ShuffleTheDeck
             Console.WriteLine();
 
             // print the rest of the rows
-            for (int number = 1; number <= 15; number++)
+            for (int number = 1; number <= 13; number++)
             {
                 //assemble the row
-                for (int letter = 0; letter < 5; letter++)
+                for (int letter = 0; letter < 4; letter++)
                 {
                     if (drawnCards[letter, number - 1])
                     {
-                        prettyNumber = number + (letter * 15); //offset the number by the letter column
+                        prettyNumber = number + letter; //offset the number by the letter column
                         currentRow += prettyNumber.ToString().PadLeft(padding) + columnSeperator;
                     }
                     else
@@ -92,8 +92,8 @@ namespace ShuffleTheDeck
             int letter = 0, number = 0;
             do
             {
-                letter = RandomNumberZeroTo(4);
-                number = RandomNumberZeroTo(14);
+                letter = RandomNumberZeroTo(3);
+                number = RandomNumberZeroTo(12);
 
             } while (drawnCards[letter, number]);
 
@@ -115,9 +115,9 @@ namespace ShuffleTheDeck
 
         static void ClearDrawBalls()
         {
-            for (int letter = 0; letter < 5; letter++)
+            for (int letter = 0; letter < 4; letter++)
             {
-                for (int number = 0; number < 15; number++)
+                for (int number = 0; number < 13; number++)
                 {
                     drawnCards[letter, number] = false;
                 }
