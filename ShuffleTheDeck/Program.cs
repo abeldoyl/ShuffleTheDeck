@@ -24,7 +24,8 @@ namespace ShuffleTheDeck
                 {
                     Console.WriteLine("Press \"enter\" to Draw a new card\n"
                     + "Press \"Q\" at any time to quit\n"
-                    + "Press \"C\" to clear the board and reshuffle the deck at any time");
+                    + "Press \"C\" to clear the board" +
+                    " and reshuffle the deck at any time");
                     DrawCard();
                     cardcount++;
                 }
@@ -32,7 +33,8 @@ namespace ShuffleTheDeck
                 {
                     Console.WriteLine("All cards have been drawn");
                     Console.WriteLine("Press \"Q\" to quit");
-                    Console.WriteLine("Press \"C\" to clear the board and reshuffle the deck to start a new game");
+                    Console.WriteLine("Press \"C\" to clear the board " +
+                        "and reshuffle the deck to start a new game");
                 }
                 Console.WriteLine($"Card Count: {cardcount}");
                 Display();
@@ -79,6 +81,7 @@ namespace ShuffleTheDeck
 
                     if (drawnCards[suits, number - 1])
                     {
+                        // switch case for cards to show A, K, Q, and J
                         switch (number)
                         {
                             case 1:
@@ -132,6 +135,7 @@ namespace ShuffleTheDeck
             }
         }
 
+        // Method to draw cards
         static void DrawCard()
         {
             int suit = 0, number = 0;
