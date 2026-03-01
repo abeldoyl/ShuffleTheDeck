@@ -24,7 +24,7 @@ namespace ShuffleTheDeck
                 {
                     Console.WriteLine("Press \"enter\" to Draw a new card\n"
                     + "Press \"Q\" at any time to quit\n"
-                    + "Press \"C\" to clear the board at any time");
+                    + "Press \"C\" to clear the board and reshuffle the deck at any time");
                     DrawCard();
                     cardcount++;
                 }
@@ -32,9 +32,9 @@ namespace ShuffleTheDeck
                 {
                     Console.WriteLine("All cards have been drawn");
                     Console.WriteLine("Press \"Q\" to quit");
-                    Console.WriteLine("Press \"C\" to clear the board to start a new game");
+                    Console.WriteLine("Press \"C\" to clear the board and reshuffle the deck to start a new game");
                 }
-                Console.WriteLine($"Ball Count: {cardcount}");
+                Console.WriteLine($"Card Count: {cardcount}");
                 Display();
                 userInput = Console.ReadLine(); //Fixed double drawn cards issue
                 if (userInput == "c" || userInput == "C")
@@ -117,16 +117,16 @@ namespace ShuffleTheDeck
         {
             switch (suitIndex)
             {
-                case 0: // Heart
+                case 0: // Heart Suit Color
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     break;
-                case 1: // Spade
+                case 1: // Spade Suit Color
                     Console.ForegroundColor = ConsoleColor.DarkBlue;
                     break;
-                case 2: // Diamond
+                case 2: // Diamond Suit Color
                     Console.ForegroundColor = ConsoleColor.Red;
                     break;
-                case 3: // Club
+                case 3: // Club Suit Color
                     Console.ForegroundColor = ConsoleColor.Blue;
                     break;
             }
