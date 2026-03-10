@@ -2,7 +2,7 @@
 Abel Doyle
 RCET 2265
 Spring Semester 2026
-ConvertandValidate
+ShuffleTheDeck
 https://github.com/abeldoyl/ShuffleTheDeck.git
 */
 
